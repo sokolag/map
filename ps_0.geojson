@@ -1,0 +1,691 @@
+{
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          30.128390000000003,
+          59.843118000000004
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №1",
+        "source": "Урицкая ПНС"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.246921999999998,
+          59.844755000000006
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №2",
+        "source": "Московская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.257298,
+          59.843661
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №3",
+        "source": "Московская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.260056,
+          59.841939
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №4",
+        "source": "Урицкая ПНС"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.265913,
+          59.839954000000006
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №5",
+        "source": "Урицкая ПНС"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.271756,
+          59.847106999999994
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №6",
+        "source": "Московская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.274582000000002,
+          59.851417000000005
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №7",
+        "source": "Московская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.22097,
+          59.835473
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №8",
+        "source": "Урицкая ПНС"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.2511,
+          59.849677
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №9",
+        "source": "Московская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.159813,
+          59.83893199999999
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №10",
+        "source": "Урицкая ПНС"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.261277000000003,
+          59.851408
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №11",
+        "source": "Московская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.238290000000003,
+          59.85848000000001
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №12",
+        "source": "Московская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.211681,
+          59.832832999999994
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №13",
+        "source": "Урицкая ПНС"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.205789000000003,
+          59.849139
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №14",
+        "source": "Московская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.205762,
+          59.828613
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №16",
+        "source": "Урицкая ПНС"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.229612,
+          59.847874
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №17",
+        "source": "Урицкая ПНС"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.137112,
+          59.837915
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №18",
+        "source": "Урицкая ПНС"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.253049,
+          59.853076
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №19",
+        "source": "Московская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.341496999999997,
+          59.837454
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №20",
+        "source": "Московская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.386583,
+          59.830861
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №21",
+        "source": "Фрунзенская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.382603999999997,
+          59.832435
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №22",
+        "source": "Фрунзенская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.389018,
+          59.878893000000005
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №23",
+        "source": "Фрунзенская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.396447,
+          59.826474
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №24",
+        "source": "Фрунзенская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.314745000000002,
+          59.838209
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №25",
+        "source": "Московская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.298225,
+          59.847042
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №26",
+        "source": "Московская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.368616999999997,
+          59.853496
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №27",
+        "source": "Фрунзенская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.408062,
+          59.873365
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №29",
+        "source": "Фрунзенская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.387940000000004,
+          59.844013000000004
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №31",
+        "source": "Фрунзенская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.355628000000003,
+          59.833406999999994
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №32",
+        "source": "Московская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.391541999999998,
+          59.84127900000001
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №33",
+        "source": "Фрунзенская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.376783,
+          59.843033                      
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №37",
+        "source": "Фрунзенская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.430493,
+          59.885029
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №38",
+        "source": "Южная ВС"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.185792,
+          59.831001
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №41",
+        "source": "Урицкая ПНС"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.381894,
+          59.840361
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №42",
+        "source": "Фрунзенская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.379990000000003,
+          59.865013
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №43",
+        "source": "Фрунзенская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.398118,
+          59.830811
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №44",
+        "source": "Фрунзенская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.387626,
+          59.849731000000006
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №48",
+        "source": "Фрунзенская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.198403999999996,
+          59.83254300000001
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №49",
+        "source": "Урицкая ПНС"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.402124,
+          59.841441
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС №50",
+        "source": "Фрунзенская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.424753000000003,
+          59.884713
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС без №",
+        "source": "Южная ВС"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.467019,
+          59.85086999999999
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС 51 без №",
+        "source": "Южная ВС"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.476702000000003,
+          59.85029599999999
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "Южная ВС",
+        "source": "Водозабор"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.179854,
+          59.831981999999996
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "Урицкая ПНС",
+        "source": "Московская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.347624,
+          59.843028000000004
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "Московская",
+        "source": "Южная ВС"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.459832000000002,
+          59.840568999999995
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "Фрунзенская",
+        "source": "Южная ВС"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.409329,
+          59.846585
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "Купчинская",
+        "source": "Фрунзенская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.510146999999996,
+          59.832882
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "Рыбацкая",
+        "source": "Южная ВС"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.310802000000002,
+          59.811496
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "ПНС Авиагородок",
+        "source": "Московская"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          30.188209000000004,
+          59.857301
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "Юго-Западная ПНС",
+        "source": "Московская"
+      },
+      "type": "Feature"
+    }
+  ],
+  "type": "FeatureCollection"
+}

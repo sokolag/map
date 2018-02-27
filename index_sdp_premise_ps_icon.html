@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset='utf-8' />
+    <title>NemoAqua №2</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.2/mapbox-gl.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.2/mapbox-gl.css' rel='stylesheet' />
+    <link href='https://www.mapbox.com/base/latest/base.css' rel='stylesheet' />
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        #map {
+            position: absolute;
+            top: 0;
+            height: 70%;
+            width: 60%;
+        }
+        
+        .map-overlay {
+            position: absolute;
+            width: 280px;
+            top: 0;
+            left: 10px;
+            padding: 10px;
+            margin-left: 5px;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            margin-right: 5px;
+            z-index: 1;
+        }
+        
+        .map-overlay .map-overlay-inner {
+            background: rgba(0, 0, 0, .8);
+            color: #fff;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.10);
+            border-radius: 3px;
+            padding: 10px;
+            margin-bottom: 10px;
+            z-index: 1;
+        }
+        
+        .map-overlay-inner fieldset {
+            border: none;
+            padding: 0;
+            margin: 0 0 10px;
+            z-index: 1;
+        }
+        /* Dark attribution */
+        
+        .mapboxgl-ctrl.mapboxgl-ctrl-attrib {
+            background: rgba(0, 0, 0, .8);
+        }
+        
+        .mapboxgl-ctrl.mapboxgl-ctrl-attrib a {
+            color: #fff;
+        }
+        /* Dark popup */
+        
+        .mapboxgl-popup-content {
+            background-color: #202020;
+            color: #fff;
+            margin-left: 5px;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            margin-right: 5px;
+            z-index: 1000;
+        }
+        
+        .mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip,
+        .mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip,
+        .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+            border-top-color: #202020;
+        }
+        
+        .mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip,
+        .mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip,
+        .mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+            border-bottom-color: #202020;
+        }
+        
+        .mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+            border-left-color: #202020;
+        }
+        
+        .mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+            border-right-color: #202020;
+        }
+        
+        #popup-menu ul,
+        #menu li {
+            margin: 0;
+            padding: 0;
+            z-index: 100;
+        }
+        
+        .mapboxgl-ctrl-group {
+            -webkit-filter: invert(100%);
+        }
+        
+        .loader {
+            margin: -10px 0 0 -250px;
+            height: 100px;
+            width: 20%;
+            position: fixed;
+            text-align: center;
+            padding: 1em;
+            top: 50%;
+            left: 50%;
+            margin: 0 auto 1em;
+            z-index: 9999;
+        }
+        #menu {
+            background: #fff;
+            position: absolute;
+            opacity: 0.8;
+            z-index: 1;
+            top: 10px;
+            left: 50px;
+            /*border-radius: 5px;*/
+            border: 1px solid rgba(0,0,0,0.4);
+            font-family: 'Open Sans', sans-serif;
+            display: none;
+        }
+
+        #menu a {
+            font-size: 13px;
+            color: #404040;
+            display: block;
+            margin: 0;
+            padding: 0;
+            padding: 10px;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(0,0,0,0.25);
+            /*border-radius: 5px;*/
+            text-align: center;
+        }
+
+        #menu a:last-child {
+            border: none;
+        }
+
+        #menu a:hover {
+            background-color: #f8f8f8;
+            color: #404040;
+        }
+
+        #menu a.active {
+            background-color: #3887be;
+            color: #ffffff;
+        }
+
+        #menu a.active:hover {
+            background: #3074a4;
+        }
+
+        /*
+      Set the color of the icon
+    */
+        
+        svg path,
+        svg rect {
+            fill: #FF6700;
+        }
+    </style>
+    <style>
+        .calculation-box {
+            height: 50px;
+            width: 150px;
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            background-color: rgba(255, 255, 255, .9);
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .plotly-div {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 50%;
+            width: 40%;
+            background-color: gray;
+        }
+
+        p {
+            font-family: 'Open Sans';
+            margin: 0;
+            font-size: 13px;
+        }
+
+        .with_nav #menu {
+          display: block;
+        }
+
+        #access_nav {
+          display: block;
+          position: absolute;
+          top: 10px;
+          left: 5px;
+          width: 40px;
+          height: 0;
+          padding-top: 40px;
+          overflow: hidden;
+          background-image: url("layers_icon.png");
+          z-index: 1;
+        }
+
+        .access_nav:hover::after {
+            content: "Слои"; /* Выводим текст */
+        }
+
+        .with_nav #access_nav {
+            background-image: url("layers_icon.png");
+        }
+    </style>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script> s
+    <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.0/mapbox-gl-draw.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.0/mapbox-gl-draw.css' type='text/css'/>
+
+</head>
+
+<body id="body">
+    <p><a href="#menu" id="access_nav"></a></p>  
+    <nav id="menu"></nav>
+    <div class='calculation-box'>
+        <p>Draw a polygon using the draw tools.</p>
+        <div id='calculated-area'></div>
+    </div>
+
+
+    <div class="plotly-div">
+        <p>Пример графика</p>
+        <div id="plotly-div"></div>
+    </div>
+
+    <div id='map'></div>   
+
+    <div class="loader loader--style1" title="0" id="loader">
+        <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+            <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+    s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+    c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z" />
+            <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+    C22.32,8.481,24.301,9.057,26.013,10.047z">
+                <animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.5s" repeatCount="indefinite" />
+            </path>
+        </svg>
+    </div>
+    <script>
+        mapboxgl.accessToken = 'default';//'pk.eyJ1Ijoiam4xNTMyIiwiYSI6ImNpbnBoczBzejEwMXZ1Mm0zbWowdGxtOHgifQ.OioFRlO4Ou3Og3sMBxmfbA';
+        //'pk.eyJ1IjoicnNiYXVtYW5uIiwiYSI6IjdiOWEzZGIyMGNkOGY3NWQ4ZTBhN2Y5ZGU2Mzg2NDY2In0.jycgv7qwF8MMIWt4cT0RaQ';
+        /* eslint-disable */
+        var map = new mapboxgl.Map({
+            container: 'map', // container id
+            style: 'http://mapbox.alliance-electro.ru:8080/styles/ae/style.json',//'mapbox://styles/mapbox/streets-v9', // //hosted style id
+            // 'mapbox://styles/mapbox/dark-v9',
+            //
+            center: [30.30, 59.85], // starting position
+            zoom: 10 // starting zoom
+        });
+
+
+        var geojson = {};
+        var points_arr = [];
+        var sectors_arr = [];
+        var placecode_arr = [];
+        // Add AJAX request for data
+        var  file = $.ajax({
+          url:"/map_sdp_color.geojson",
+          dataType: "json",
+          success: function(data) {
+            geojson = data; //console.log(data);
+            points = geojson.features
+            points_arr = points.map(function(item) {
+              return turf.point(item.geometry.coordinates);
+            });
+            sectors_arr = points.map(function(item) {
+              return item.properties.sector;
+            });
+            placecode_arr = points.map(function(item) {
+              return item.properties.placecode;
+            });
+            console.log(placecode_arr);
+            },
+          error: function (xhr) {
+            alert(xhr.statusText)
+          }
+        });
+
+        function init() {
+            map.addSource('sdp_source', {
+                type: 'geojson',
+                data: 'http://127.0.0.1:11119/map_sdp_color.geojson',
+                buffer: 0,
+                maxzoom: 20
+            });
+            map.addSource('premise_source', {
+                type: 'geojson',
+                data: 'http://127.0.0.1:11119/map_premise_icon.geojson',
+                buffer: 0,
+                maxzoom: 20
+            });
+            map.addSource('ps_source', {
+                type: 'geojson',
+                data: 'http://127.0.0.1:11119/ps_0.geojson',
+                buffer: 0,
+                maxzoom: 20
+            });
+            
+
+            if (window.location.search.indexOf('embed') !== -1) map.scrollZoom.disable();
+
+            map.addLayer({
+                'id': 'sdp_layer',
+                'type': 'circle',
+                'source': 'sdp_source',
+                'paint': {
+                    'circle-color': {
+                        property: 'color',
+                        type: 'identity'
+                    },
+                    'circle-radius': {
+                        'base': 1.75,
+                        'stops': [[12, 3], [22, 100]]
+                    },
+                    'circle-opacity': 0.8,
+                    'circle-blur': 0
+                }
+            }); 
+            // map.addLayer({
+            //     id: "placecode",
+            //     type: "symbol",
+            //     source: "sdp_source",
+            //     layout: {
+            //         "text-field": "{placecode}",
+            //         "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+            //         "text-size": {
+            //             'base': 1.75,
+            //             'stops': [[12, 0], [18, 7], [22, 80]]
+            //         },
+            //     }
+            // });      
+            // map.addLayer({
+            //     id: "premise_layer",
+            //     type: "symbol",
+            //     source: "premise_source",
+            //     "layout": {
+            //         "icon-image": "{icon}",
+            //         "icon-allow-overlap": true
+            //     },
+            //     'visibility': 'visible'
+            // });  
+            //
+            map.loadImage('http://127.0.0.1:12345/house.png', function(error, image) {
+                if (error) throw error;
+                map.addImage('home', image);
+                map.addLayer({
+                    id: "premise_layer",
+                    type: "symbol",
+                    source: "premise_source",
+                    "layout": {
+                        "icon-image": "home",
+                        "icon-size": {
+                            'base': 1,
+                            'stops': [[12, 0.005],[20, 0.5]]
+                        }
+                    }
+                });
+            });
+            map.loadImage('http://127.0.0.1:12345/centr_pump_icon_100.png', function(error, image) {
+                if (error) throw error;
+                map.addImage('ps', image);
+                map.addLayer({
+                    id: "ps_layer",
+                    type: "symbol",
+                    source: "ps_source",
+                    "layout": {
+                        "icon-image": "ps",
+                        "icon-size": {
+                            'base': 1,
+                            'stops': [[1, 0.01],[20, 0.6]]
+                        },
+                        "icon-ignore-placement": true,
+                        "text-ignore-placement": true,
+                        "text-field": "{name}",
+                        "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+                        "text-size":  12,
+                        "text-offset": [4, 0]
+                    }
+                });
+            });
+
+        //     map.addLayer({
+        //         id: "premise_layer",
+        //         type: "circle",
+        //         source: "premise_source",
+        //         'paint': {
+        //             'circle-color': {
+        //                 property: 'color_area',
+        //                 type: 'identity'
+        //             },
+        //             'circle-radius': {
+        //                 'base': 1.75,
+        //                 'stops': [[12, 6], [22, 110]]
+        //             },
+        //             'circle-opacity': 0.8,
+        //             'circle-blur': 0
+        //         }
+        //     });  
+        };    
+
+        map.once('style.load', function(e) {
+            init();
+            map.addControl(new mapboxgl.NavigationControl());
+            map.on('click', function(e) {
+
+                    var features = map.queryRenderedFeatures(e.point, {
+                        // layers: ['premise_layer']
+                        layers: ['sdp_layer', 'premise_layer', 'ps_layer']
+                    });
+                    feature = features[0]
+                    console.log(features)
+                    if (!features.length) {
+                        return;
+                    }
+                    if (feature.layer.id == 'sdp_layer') {
+                        var popup = new mapboxgl.Popup()
+                            .setLngLat(map.unproject(e.point))
+                            .setHTML('<h2>Информация о ТПУ</h2>' +
+                                '<ul>' +
+                                '<li>Плейскод: <b>' + feature.properties.placecode + '</b></li>' +
+                                '<li>Тех. сектор: <b>' + feature.properties.tech_sector + '</b></li>' +
+                                '<li>Подающая НС: <b>' + feature.properties.pumping_station + '</b></li>' +
+                                '<li>ИД Балтика: <b>' + feature.properties.id_baltica + '</b></li>' +
+                                '<li>ИД ЦРА: <b>' + feature.properties.id_cra + '</b></li>' +
+                                '<li>Терр. сектор: <b>' + feature.properties.area_sector + '</b></li>' +
+                               '<li>ДД: <b>' + feature.properties.pres_sensor + '</b></li>' +
+                                '<li>Объект: <b>' + feature.properties.premise + '</b></li>' +
+                                '<li>Адрес: <b>' + feature.properties.address + '</b></li>' +
+                                '<li>Район: <b>' + feature.properties.district + '</b></li>' +
+                                '</ul>')
+                            .addTo(map);
+                    }
+                    else if (feature.layer.id == 'premise_layer') {
+                        // Popup для Premise                            
+                        var popup = new mapboxgl.Popup()
+                            .setLngLat(map.unproject(e.point))
+                            .setHTML('<h2>Информация об объекте</h2>' +
+                                '<ul>' +
+                                '<li>Плейскоды: <strong>' + feature.properties.id_cra + '</strong></li>' +
+                                '<li>ИД ЦРА: <b>' + feature.properties.id_cra + '</b></li>' +
+                                '<li>Терр. сектор: <b>' + feature.properties.area_sector + '</b></li>' +
+                                '<li>Объект: <b>' + feature.properties.premise + '</b></li>' +
+                                '<li>Адрес: <b>' + feature.properties.address + '</b></li>' +
+                                '<li>Район: <b>' + feature.properties.district + '</b></li>' +                                
+                                '</ul>')                            
+                            .addTo(map);
+                    }
+                    else if (feature.layer.id == 'ps_layer') {
+                        // Popup для Pump Station    
+                        var popup = new mapboxgl.Popup()
+                            .setLngLat(map.unproject(e.point))
+                            .setHTML('<h2>Информация о НС</h2>' +
+                                '<ul>' +
+                                '<li><a href="http://integraxor.westeurope.cloudapp.azure.com/DEM0/index.html#wwtp.min.svg" target="_blank">Мнемосхема НС</a></li>'+
+                                '<li>Наименование: <b>' + feature.properties.name + '</b></li>' +
+                                '<li>Подающая НС: <b>' + feature.properties.source + '</b></li>' +
+                                '<li>Широта: <b>' + feature.geometry.coordinates[0] + '</b></li>' +
+                                '<li>Долгота: <b>' + feature.geometry.coordinates[1] + '</b></li>' +
+                                '</ul>')
+                            .addTo(map);
+                    }
+            });
+                        
+            //Hide loading bar once tiles from geojson are loaded
+            map.on('data', function(e) {
+                if (e.dataType === 'source' && e.sourceId === 'sdp_source') {
+                    document.getElementById("loader").style.visibility = "hidden";
+                }
+            })
+
+            // Use the same approach as above to indicate that the symbols are clickable
+            // by changing the cursor style to 'pointer'.
+            map.on('mousemove', function(e) {
+                var features = map.queryRenderedFeatures(e.point, {
+                    layers: ['sdp_layer', 'premise_layer','ps_layer']
+                });
+                map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+                document.getElementById('calculated-area').innerHTML =
+                    // e.point is the x, y coordinates of the mousemove event relative
+                    // to the top-left corner of the map
+                    JSON.stringify(e.point) + '<br />' +
+                    // e.lngLat is the longitude, latitude geographical position of the event
+                    JSON.stringify(e.lngLat);
+            });            
+        });
+        var draw = new MapboxDraw({
+                displayControlsDefault: false,
+                controls: {
+                polygon: true,
+                trash: true
+            }
+        });
+    map.addControl(draw);
+
+    map.on('draw.create', updateArea);
+    map.on('draw.delete', updateArea);
+    map.on('draw.update', updateArea);
+
+
+
+
+    function updateArea(e) {
+        var data = draw.getAll();
+        var pt = turf.point([30.301, 59.852]);
+        try {
+            console.log(JSON.stringify(data));
+        } catch (err) {
+            console.log("error");
+        }
+        try {
+            console.log(JSON.stringify(data.features));
+        } catch (err) {
+            console.log("error");
+        }
+
+        try {
+            console.log(JSON.stringify(data.features.geometry));
+        } catch (err) {
+            console.log("error");
+        }
+        try {
+            console.log(JSON.stringify(data.features.geometry.coordinates));
+        } catch (err) {
+            console.log("error");
+        }
+        try {
+            console.log(JSON.stringify(data.features[0].geometry.coordinates));
+        } catch (err) {
+            console.log("error");
+        }
+
+        var answer = document.getElementById('calculated-area');
+        if (data.features.length > 0) {
+            var area = turf.area(data);
+            var poly = turf.polygon(data.features[0].geometry.coordinates);   
+            var in_poly = points_arr.map(function(item) {                
+              return turf.booleanPointInPolygon(item, poly);
+            });
+            var chosen_placecodes = [];
+            placecode_arr.forEach(function(item, i, placecode_arr) {
+              if (in_poly[i] == true) chosen_placecodes.push(item);
+            });
+            console.log(chosen_placecodes)
+            // restrict to area to 2 decimal points
+            // var rounded_area = Math.round(area*100)/100;
+            answer.innerHTML = chosen_placecodes;
+        } 
+        else {
+            answer.innerHTML = '';
+            if (e.type !== 'draw.delete') alert("Выбранные плейскоды");
+        }
+    }
+    var toggleableLayerIds = ['Точки предоставления услуг', 'Объекты ИС ЦРА', 'Насосные станции'];
+
+    for (var i = 0; i < toggleableLayerIds.length; i++) {
+        var id = toggleableLayerIds[i];
+
+        var link = document.createElement('a');
+        link.href = '#';
+        link.className = 'active';
+        link.textContent = id;
+
+        link.onclick = function (e) {
+            var clickedLayer = this.textContent;
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (clickedLayer == 'Точки предоставления услуг') clickedLayer = ['sdp_layer'];
+            else if (clickedLayer == 'Объекты ИС ЦРА') clickedLayer = ['premise_layer'];
+            else if (clickedLayer == 'Насосные станции') clickedLayer = ['ps_layer', 'winccoa_layer'];
+
+            var index;
+            for (index = 0; index < clickedLayer.length; ++index) {
+                var visibility = map.getLayoutProperty(clickedLayer[index], 'visibility');
+
+                if (visibility === 'visible') {
+                    map.setLayoutProperty(clickedLayer[index], 'visibility', 'none');
+                    this.className = '';
+                } else {
+                    this.className = 'active';
+                    map.setLayoutProperty(clickedLayer[index], 'visibility', 'visible');
+                }
+            }
+
+
+        };
+
+        var layers = document.getElementById('menu');
+        layers.appendChild(link);
+    }
+
+    // var url = 'http://127.0.0.1:12346/get_time';
+    // map.on('load', function () {
+    //     window.setInterval(function() {
+    //         map.getSource('time').setData(url);
+    //     }, 2000);
+    //     map.addSource('time', { type: 'geojson', data: url });
+    //     map.addLayer({
+    //         "id": "time_layer",
+    //         "type": "symbol",
+    //         "source": "time",
+    //         "layout": {
+    //             'text-field': '{time}',
+    //             "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+    //             "text-size": 12
+    //         }
+            
+
+    //     });
+    // });
+
+
+    var winccoa_url = 'http://127.0.0.1:12346/get_winccoa_data';
+    map.on('load', function () {
+        window.setInterval(function() {
+            map.getSource('winccoa_source').setData(winccoa_url);
+        }, 4000);
+        map.addSource('winccoa_source', { type: 'geojson', data: winccoa_url });
+        map.addLayer({
+            "id": "winccoa_layer",
+            "type": "symbol",
+            "source": "winccoa_source",
+            "layout": {
+                "text-field": "{PressureOut1}",
+                "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+                "text-size": 12,
+                "text-offset": [3, -1],
+                "text-ignore-placement": true
+            }
+        });
+    });
+    // Add geolocate control to the map.
+    map.addControl(new mapboxgl.GeolocateControl({
+        positionOptions: {
+            enableHighAccuracy: true
+        },
+        trackUserLocation: true
+    }));
+
+    //Кнопка Слои
+    var nav = document.getElementById('access_nav'),
+      body = document.body;
+
+        nav.addEventListener('click', function(e) {
+        body.className = body.className? '' : 'with_nav';
+        e.preventDefault();
+    });
+
+    //Plotly test
+    trace1 = {
+      x: ['2017-12-05 14:05:00', '2017-12-05 14:06:00', '2017-12-05 14:07:00', '2017-12-05 14:08:00', '2017-12-05 14:09:00', '2017-12-05 14:10:00', '2017-12-05 14:11:00', '2017-12-05 14:12:00', '2017-12-05 14:13:00', '2017-12-05 14:14:00', '2017-12-05 14:15:00', '2017-12-05 14:16:00', '2017-12-05 14:17:00', '2017-12-05 14:18:00', '2017-12-05 14:19:00', '2017-12-05 14:20:00', '2017-12-05 14:21:00', '2017-12-05 14:22:00', '2017-12-05 14:23:00', '2017-12-05 14:24:00', '2017-12-05 14:25:00', '2017-12-05 14:26:00', '2017-12-05 14:27:00', '2017-12-05 14:28:00', '2017-12-05 14:29:00', '2017-12-05 14:30:00', '2017-12-05 14:31:00', '2017-12-05 14:32:00', '2017-12-05 14:33:00', '2017-12-05 14:34:00', '2017-12-05 14:35:00', '2017-12-05 14:36:00', '2017-12-05 14:37:00', '2017-12-05 14:38:00', '2017-12-05 14:39:00', '2017-12-05 14:40:00', '2017-12-05 14:41:00', '2017-12-05 14:42:00', '2017-12-05 14:43:00', '2017-12-05 14:44:00', '2017-12-05 14:45:00', '2017-12-05 14:46:00', '2017-12-05 14:47:00', '2017-12-05 14:48:00', '2017-12-05 14:49:00', '2017-12-05 14:50:00', '2017-12-05 14:51:00', '2017-12-05 14:52:00', '2017-12-05 14:53:00', '2017-12-05 14:54:00', '2017-12-05 14:55:00', '2017-12-05 14:56:00', '2017-12-05 14:57:00', '2017-12-05 14:58:00', '2017-12-05 14:59:00'], 
+      y: [187, 234, 208, 198, 221, 182, 228, 189, 163, 173, 229, 212, 176, 150, 152, 149, 193, 151, 159, 164, 159, 206, 163, 189, 134, 181, 205, 199, 183, 175, 150, 157, 188, 217, 155, 168, 173, 182, 168, 192, 140, 160, 170, 162, 156, 176, 153, 166, 161, 162, 168, 180, 170, 175, 143], 
+      name: 'TD', 
+      type: 'scatter'
+    };
+    trace2 = {
+      x: ['2017-12-05 14:05:00', '2017-12-05 14:06:00', '2017-12-05 14:07:00', '2017-12-05 14:08:00', '2017-12-05 14:09:00', '2017-12-05 14:10:00', '2017-12-05 14:11:00', '2017-12-05 14:12:00', '2017-12-05 14:13:00', '2017-12-05 14:14:00', '2017-12-05 14:15:00', '2017-12-05 14:16:00', '2017-12-05 14:17:00', '2017-12-05 14:18:00', '2017-12-05 14:19:00', '2017-12-05 14:20:00', '2017-12-05 14:21:00', '2017-12-05 14:22:00', '2017-12-05 14:23:00', '2017-12-05 14:24:00', '2017-12-05 14:25:00', '2017-12-05 14:26:00', '2017-12-05 14:27:00', '2017-12-05 14:28:00', '2017-12-05 14:29:00', '2017-12-05 14:30:00', '2017-12-05 14:31:00', '2017-12-05 14:32:00', '2017-12-05 14:33:00', '2017-12-05 14:34:00', '2017-12-05 14:35:00', '2017-12-05 14:36:00', '2017-12-05 14:37:00', '2017-12-05 14:38:00', '2017-12-05 14:39:00', '2017-12-05 14:40:00', '2017-12-05 14:41:00', '2017-12-05 14:42:00', '2017-12-05 14:43:00', '2017-12-05 14:44:00', '2017-12-05 14:45:00', '2017-12-05 14:46:00', '2017-12-05 14:47:00', '2017-12-05 14:48:00', '2017-12-05 14:49:00', '2017-12-05 14:50:00', '2017-12-05 14:51:00', '2017-12-05 14:52:00', '2017-12-05 14:53:00', '2017-12-05 14:54:00', '2017-12-05 14:55:00', '2017-12-05 14:56:00', '2017-12-05 14:57:00', '2017-12-05 14:58:00', '2017-12-05 14:59:00'], 
+      y: [43, 39, 38, 41, 47, 33, 44, 29, 38, 43, 45, 52, 41, 41, 51, 48, 43, 43, 39, 40, 47, 54, 174, 167, 162, 193, 171, 182, 176, 176, 162, 169, 194, 185, 177, 180, 87, 45, 44, 37, 42, 38, 35, 27, 39, 29, 36, 36, 34, 38, 34, 26, 34, 43, 31], 
+      name: 'FD', 
+      type: 'scatter'
+    };
+    trace3 = {
+      x: ['2017-12-05 14:05:00', '2017-12-05 14:06:00', '2017-12-05 14:07:00', '2017-12-05 14:08:00', '2017-12-05 14:09:00', '2017-12-05 14:10:00', '2017-12-05 14:11:00', '2017-12-05 14:12:00', '2017-12-05 14:13:00', '2017-12-05 14:14:00', '2017-12-05 14:15:00', '2017-12-05 14:16:00', '2017-12-05 14:17:00', '2017-12-05 14:18:00', '2017-12-05 14:19:00', '2017-12-05 14:20:00', '2017-12-05 14:21:00', '2017-12-05 14:22:00', '2017-12-05 14:23:00', '2017-12-05 14:24:00', '2017-12-05 14:25:00', '2017-12-05 14:26:00', '2017-12-05 14:27:00', '2017-12-05 14:28:00', '2017-12-05 14:29:00', '2017-12-05 14:30:00', '2017-12-05 14:31:00', '2017-12-05 14:32:00', '2017-12-05 14:33:00', '2017-12-05 14:34:00', '2017-12-05 14:35:00', '2017-12-05 14:36:00', '2017-12-05 14:37:00', '2017-12-05 14:38:00', '2017-12-05 14:39:00', '2017-12-05 14:40:00', '2017-12-05 14:41:00', '2017-12-05 14:42:00', '2017-12-05 14:43:00', '2017-12-05 14:44:00', '2017-12-05 14:45:00', '2017-12-05 14:46:00', '2017-12-05 14:47:00', '2017-12-05 14:48:00', '2017-12-05 14:49:00', '2017-12-05 14:50:00', '2017-12-05 14:51:00', '2017-12-05 14:52:00', '2017-12-05 14:53:00', '2017-12-05 14:54:00', '2017-12-05 14:55:00', '2017-12-05 14:56:00', '2017-12-05 14:57:00', '2017-12-05 14:58:00', '2017-12-05 14:59:00'], 
+      y: [23, 18, 20, 16, 15, 11, 15, 24, 14, 32, 29, 30, 19, 18, 13, 20, 16, 13, 15, 19, 19, 10, 15, 10, 22, 8, 15, 12, 21, 35, 9, 14, 11, 11, 9, 13, 12, 12, 13, 17, 15, 18, 11, 14, 8, 11, 9, 12, 14, 13, 17, 14, 14, 18, 3], 
+      name: 'GP', 
+      type: 'scatter'
+    };
+    trace4 = {
+      x: ['2017-12-05 14:05:00', '2017-12-05 14:06:00', '2017-12-05 14:07:00', '2017-12-05 14:08:00', '2017-12-05 14:09:00', '2017-12-05 14:10:00', '2017-12-05 14:11:00', '2017-12-05 14:12:00', '2017-12-05 14:13:00', '2017-12-05 14:14:00', '2017-12-05 14:15:00', '2017-12-05 14:16:00', '2017-12-05 14:17:00', '2017-12-05 14:18:00', '2017-12-05 14:19:00', '2017-12-05 14:20:00', '2017-12-05 14:21:00', '2017-12-05 14:22:00', '2017-12-05 14:23:00', '2017-12-05 14:24:00', '2017-12-05 14:25:00', '2017-12-05 14:26:00', '2017-12-05 14:27:00', '2017-12-05 14:28:00', '2017-12-05 14:29:00', '2017-12-05 14:30:00', '2017-12-05 14:31:00', '2017-12-05 14:32:00', '2017-12-05 14:33:00', '2017-12-05 14:34:00', '2017-12-05 14:35:00', '2017-12-05 14:36:00', '2017-12-05 14:37:00', '2017-12-05 14:38:00', '2017-12-05 14:39:00', '2017-12-05 14:40:00', '2017-12-05 14:41:00', '2017-12-05 14:42:00', '2017-12-05 14:43:00', '2017-12-05 14:44:00', '2017-12-05 14:45:00', '2017-12-05 14:46:00', '2017-12-05 14:47:00', '2017-12-05 14:48:00', '2017-12-05 14:49:00', '2017-12-05 14:50:00', '2017-12-05 14:51:00', '2017-12-05 14:52:00', '2017-12-05 14:53:00', '2017-12-05 14:54:00', '2017-12-05 14:55:00', '2017-12-05 14:56:00', '2017-12-05 14:57:00', '2017-12-05 14:58:00', '2017-12-05 14:59:00'], 
+      y: [27, 22, 18, 24, 26, 26, 33, 26, 23, 25, 29, 26, 25, 20, 22, 14, 17, 20, 15, 21, 14, 18, 26, 19, 18, 69, 15, 14, 14, 19, 17, 23, 19, 18, 19, 15, 21, 19, 26, 29, 22, 21, 25, 24, 17, 14, 15, 23, 22, 14, 26, 18, 9, 9, 16], 
+      name: 'Other', 
+      type: 'scatter'
+    };
+    data = [trace1, trace2, trace3, trace4];
+    layout = {title: 'Какие-то значения в зависимости от времени'};
+    Plotly.plot('plotly-div', {
+      data: data,
+      layout: layout
+    });
+</script>
+</body>
+
+</html>
+
