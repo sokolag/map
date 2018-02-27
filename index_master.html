@@ -323,30 +323,7 @@
                     'circle-blur': 0
                 }
             }); 
-            // map.addLayer({
-            //     id: "placecode",
-            //     type: "symbol",
-            //     source: "sdp_source",
-            //     layout: {
-            //         "text-field": "{placecode}",
-            //         "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-            //         "text-size": {
-            //             'base': 1.75,
-            //             'stops': [[12, 0], [18, 7], [22, 80]]
-            //         },
-            //     }
-            // });      
-            // map.addLayer({
-            //     id: "premise_layer",
-            //     type: "symbol",
-            //     source: "premise_source",
-            //     "layout": {
-            //         "icon-image": "{icon}",
-            //         "icon-allow-overlap": true
-            //     },
-            //     'visibility': 'visible'
-            // });  
-            //
+    
             map.loadImage('./house.png', function(error, image) {
                 if (error) throw error;
                 map.addImage('home', image);
