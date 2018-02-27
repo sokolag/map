@@ -286,19 +286,19 @@
         function init() {
             map.addSource('sdp_source', {
                 type: 'geojson',
-                data: 'http://127.0.0.1:11119/map_sdp_color.geojson',
+                data: './map_sdp_color.geojson',
                 buffer: 0,
                 maxzoom: 20
             });
             map.addSource('premise_source', {
                 type: 'geojson',
-                data: 'http://127.0.0.1:11119/map_premise_icon.geojson',
+                data: './map_premise_icon.geojson',
                 buffer: 0,
                 maxzoom: 20
             });
             map.addSource('ps_source', {
                 type: 'geojson',
-                data: 'http://127.0.0.1:11119/ps_0.geojson',
+                data: './ps_0.geojson',
                 buffer: 0,
                 maxzoom: 20
             });
@@ -347,7 +347,7 @@
             //     'visibility': 'visible'
             // });  
             //
-            map.loadImage('http://127.0.0.1:11119/house.png', function(error, image) {
+            map.loadImage('./house.png', function(error, image) {
                 if (error) throw error;
                 map.addImage('home', image);
                 map.addLayer({
@@ -363,7 +363,7 @@
                     }
                 });
             });
-            map.loadImage('http://127.0.0.1:11119/centr_pump_icon_100.png', function(error, image) {
+            map.loadImage('./centr_pump_icon_100.png', function(error, image) {
                 if (error) throw error;
                 map.addImage('ps', image);
                 map.addLayer({
