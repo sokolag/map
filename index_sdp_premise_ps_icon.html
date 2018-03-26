@@ -258,12 +258,12 @@
         </svg>
     </div>
     <script>
-        mapboxgl.accessToken = 'default';//'pk.eyJ1Ijoiam4xNTMyIiwiYSI6ImNpbnBoczBzejEwMXZ1Mm0zbWowdGxtOHgifQ.OioFRlO4Ou3Og3sMBxmfbA';
+        mapboxgl.accessToken = 'pk.eyJ1Ijoiam4xNTMyIiwiYSI6ImNpbnBoczBzejEwMXZ1Mm0zbWowdGxtOHgifQ.OioFRlO4Ou3Og3sMBxmfbA';
         //'pk.eyJ1IjoicnNiYXVtYW5uIiwiYSI6IjdiOWEzZGIyMGNkOGY3NWQ4ZTBhN2Y5ZGU2Mzg2NDY2In0.jycgv7qwF8MMIWt4cT0RaQ';
         /* eslint-disable */
         var map = new mapboxgl.Map({
             container: 'map', // container id
-            style: 'http://mapbox.alliance-electro.ru:8080/styles/ae/style.json',//'mapbox://styles/mapbox/streets-v9', // //hosted style id
+            style: 'mapbox://styles/mapbox/streets-v9', // //hosted style id'http://mapbox.alliance-electro.ru:8080/styles/ae/style.json',//
             // 'mapbox://styles/mapbox/dark-v9',
             //
             center: [30.30, 59.85], // starting position
@@ -301,19 +301,19 @@
         function init() {
             map.addSource('sdp_source', {
                 type: 'geojson',
-                data: 'http://127.0.0.1:11119/map_sdp_color.geojson',
+                data: './map_sdp_color.geojson',
                 buffer: 0,
                 maxzoom: 20
             });
             map.addSource('premise_source', {
                 type: 'geojson',
-                data: 'http://127.0.0.1:11119/map_premise_icon.geojson',
+                data: '.map_premise_icon.geojson',
                 buffer: 0,
                 maxzoom: 20
             });
             map.addSource('ps_source', {
                 type: 'geojson',
-                data: 'http://127.0.0.1:11119/ps_0.geojson',
+                data: './ps_0.geojson',
                 buffer: 0,
                 maxzoom: 20
             });
@@ -362,7 +362,7 @@
             //     'visibility': 'visible'
             // });  
             //
-            map.loadImage('http://127.0.0.1:12345/house.png', function(error, image) {
+            map.loadImage('./house.png', function(error, image) {
                 if (error) throw error;
                 map.addImage('home', image);
                 map.addLayer({
@@ -378,7 +378,7 @@
                     }
                 });
             });
-            map.loadImage('http://127.0.0.1:12345/centr_pump_icon_100.png', function(error, image) {
+            map.loadImage('./centr_pump_icon_100.png', function(error, image) {
                 if (error) throw error;
                 map.addImage('ps', image);
                 map.addLayer({
